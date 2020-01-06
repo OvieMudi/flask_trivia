@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "../stylesheets/Question.css";
+import React, { Component } from 'react';
+import '../stylesheets/Question.css';
 
 class Question extends Component {
   constructor() {
@@ -28,21 +28,21 @@ class Question extends Component {
           <div className="difficulty">Difficulty: {difficulty}</div>
           <img
             src="delete.png"
-            className="delete"
+            className="delete pointer"
             alt="delete"
-            onClick={() => this.props.questionAction("DELETE")}
+            onClick={() => this.props.questionAction('DELETE')}
           />
         </div>
         <div
           className="show-answer button"
           onClick={() => this.flipVisibility()}
         >
-          {this.state.visibleAnswer ? "Hide" : "Show"} Answer
+          {this.state.visibleAnswer ? 'Hide' : 'Show'} Answer
         </div>
         <div className="answer-holder">
           <span
             style={{
-              visibility: this.state.visibleAnswer ? "visible" : "hidden"
+              visibility: this.state.visibleAnswer ? 'visible' : 'hidden'
             }}
           >
             Answer: {answer}

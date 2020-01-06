@@ -1,47 +1,49 @@
 .quiz-play-holder {
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
-    margin-top: 40px;
+  width: 80%;
+  margin-left: 10%;
+  text-align: center;
+  margin-top: 40px;
 }
 
 .category-holder {
-    margin-top: 16px;
-    font-size: 24px;
+  margin-top: 16px;
+  font-size: 24px;
 }
 
 .choose-header {
-    font-size: 34px;
-    font-weight: bold;
+  font-size: 34px;
+  font-weight: bold;
 }
 
 .play-category:hover {
-    color: dodgerblue;
+  color: dodgerblue;
+  cursor: pointer;
 }
 
 .button {
-    width: 100px;
-    margin-top: 5px;
-    background-color: dodgerblue;
-    color: white;
-    padding: 3px 5px;
-    align-self: center;
+  width: 100px;
+  margin-top: 5px;
+  background-color: dodgerblue;
+  color: white;
+  padding: 3px 5px;
+  align-self: center;
+  cursor: pointer;
 }
 
 div.button {
-    margin-top: 20px;
-    margin-left: calc(50% - 50px);
+  margin-top: 20px;
+  margin-left: calc(50% - 50px);
 }
 
 .quiz-question {
-    margin: 12px;
-    font-size: 24px;
+  margin: 12px;
+  font-size: 24px;
 }
 
 .correct {
-    color: green;
+  color: green;
 }
 
 .wrong {
-    color: red;
+  color: red;
 }

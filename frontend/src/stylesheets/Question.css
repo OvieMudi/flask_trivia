@@ -73,10 +73,3 @@ img.category {
 img.delete {
   width: 20px;
 }
-
-li,
-.delete,
-.button,
-.page-num {
-  cursor: pointer;
-}

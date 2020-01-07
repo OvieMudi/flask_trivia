@@ -35,8 +35,10 @@ This will install all of the required packages we selected within the `requireme
 With Postgres running, restore a database using the trivia.psql file provided. From the backend folder in terminal run:
 
 ```bash
-psql trivia < trivia.psql
+sh ./run.sh
 ```
+
+- **IMPORTANT:** create a `.config.env` in the `/backend` directory that contains your database path. See the `.config.env.example` file for details.
 
 ## Running the server
 

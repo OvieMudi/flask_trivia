@@ -29,7 +29,7 @@ def fetch_categories():
 
 def fetch_questions():
     questions = Question.query.all()
-    formated_questions = [category.format() for category in questions]
+    formated_questions = [question.format() for question in questions]
     return formated_questions
 
 
@@ -91,17 +91,16 @@ def create_app(test_config=None):
     @app.route('/questions')
     def get_questions():
         try:
-            questions = Question.query.all()
-            formated_questions = [question.format() for question in questions]
+            formated_questions = fetch_questions()
             paginated_questions = paginate_results(formated_questions)
 
-            if request.args.get('page', 1, int) > ceil(len(questions)/QUESTIONS_PER_PAGE):
+            if request.args.get('page', 1, int) > ceil(len(formated_questions)/QUESTIONS_PER_PAGE):
                 return handle_404_error('Out of range')
 
             return jsonify({
                 'success': True,
                 'questions': paginated_questions,
-                'total_questions': len(questions),
+                'total_questions': len(formated_questions),
                 'categories': fetch_categories(),
                 'current_categories': None
             })
@@ -185,9 +184,7 @@ def create_app(test_config=None):
         handle_path_params_validation(category_id)
 
         try:
-            questions = Question.query.filter(
-                Question.category == category_id).all()
-            formated_questions = [question.format() for question in questions]
+            formated_questions = fetch_questions_filter_by_category(category_id)
             paginated_questions = paginate_results(formated_questions)
 
             return jsonify({
@@ -204,34 +201,41 @@ def create_app(test_config=None):
     @app.route('/quizzes', methods=['POST'])
     def quiz_questions():
         body = request.get_json()
-        previous_questions = body.get('previous_questions', None)
-        quiz_category = body.get('quiz_category', None)
 
-        try:
-            questions = None
-            selected_question = None
+        if not body:
+            abort(500)
+        
+        else:
+            previous_questions = body.get('previous_questions', None)
+            quiz_category = body.get('quiz_category', None)
 
-            if bool(int(quiz_category)):
-                questions = fetch_questions_filter_by_category(quiz_category)
+            try:
+                questions = None
+                selected_question = None
 
-            else:
-                questions = fetch_questions()
+                if bool(int(quiz_category)):
+                    questions = fetch_questions_filter_by_category(quiz_category)
 
-            available_questions = [
-                question for question in questions if question.get('id') not in previous_questions]
+                else:
+                    questions = fetch_questions()
 
-            selected_question = random.choice(
-                available_questions) if len(available_questions) else None
+                available_questions = [
+                    question for question in questions if question.get('id') not in previous_questions]
 
-            return jsonify({
-                'success': True,
-                'question': selected_question,
-                'available_questions': available_questions
-            })
+                selected_question = random.choice(
+                    available_questions) if len(available_questions) else None
 
-        except:
-            print(exc_info())
-            abort(422)
+                return jsonify({
+                    'success': True,
+                    'question': selected_question,
+                    'available_questions': available_questions
+                })
+
+    
+
+            except:
+                print(exc_info())
+                abort(422)
 
     '''
     @TODO:

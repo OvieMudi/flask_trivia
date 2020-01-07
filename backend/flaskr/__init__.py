@@ -45,8 +45,8 @@ def handle_path_params_validation(param):
         int(param)
         pass
 
-    except:
-        print(exc_info())
+    except Exception as ex:
+        print(ex)
         abort(400)
 
 
@@ -56,7 +56,8 @@ def create_app(test_config=None):
     setup_db(app)
 
     '''
-    @TODO: Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs
+    @TODO: Set up CORS. Allow '*' for origins.
+    Delete the sample route after completing the TODOs
     '''
     CORS(app)
 
@@ -85,8 +86,8 @@ def create_app(test_config=None):
                 'categories': formated_categories
             })
 
-        except:
-            print(exc_info())
+        except Exception as ex:
+            print(ex)
 
     @app.route('/questions')
     def get_questions():
@@ -94,7 +95,8 @@ def create_app(test_config=None):
             formated_questions = fetch_questions()
             paginated_questions = paginate_results(formated_questions)
 
-            if request.args.get('page', 1, int) > ceil(len(formated_questions)/QUESTIONS_PER_PAGE):
+            if request.args.get('page', 1, int) > ceil(
+                    len(formated_questions)/QUESTIONS_PER_PAGE):
                 return handle_404_error('Out of range')
 
             return jsonify({
@@ -105,7 +107,7 @@ def create_app(test_config=None):
                 'current_categories': None
             })
 
-        except:
+        except Exception as ex:
             print(exc_info)
             abort(422)
 
@@ -120,8 +122,8 @@ def create_app(test_config=None):
                 'success': True,
                 'deleted': question_id
             })
-        except:
-            print(exc_info())
+        except Exception as ex:
+            print(ex)
             abort(422)
 
     @app.route('/questions', methods=['POST'])
@@ -145,7 +147,7 @@ def create_app(test_config=None):
                     'current_category': None
                 })
 
-            except:
+            except Exception as ex:
                 abort(422)
 
         else:
@@ -157,7 +159,8 @@ def create_app(test_config=None):
             for value in (question, answer, difficulty, category):
                 if not value:
                     print(value)
-                    return handle_400_error(f'Null or invalid syntax in request data: {value}')
+                    return handle_400_error(
+                        f'Null or invalid syntax in request data: {value}')
 
             try:
                 new_question = Question(
@@ -175,8 +178,8 @@ def create_app(test_config=None):
                     'question': new_question.format()
                 }), 201
 
-            except:
-                print(exc_info())
+            except Exception as ex:
+                print(ex)
                 abort(422)
 
     @app.route('/categories/<category_id>/questions')
@@ -184,7 +187,8 @@ def create_app(test_config=None):
         handle_path_params_validation(category_id)
 
         try:
-            formated_questions = fetch_questions_filter_by_category(category_id)
+            formated_questions = fetch_questions_filter_by_category(
+                category_id)
             paginated_questions = paginate_results(formated_questions)
 
             return jsonify({
@@ -194,8 +198,8 @@ def create_app(test_config=None):
                 'current_category': category_id
             })
 
-        except:
-            print(exc_info())
+        except Exception as ex:
+            print(ex)
             abort(422)
 
     @app.route('/quizzes', methods=['POST'])
@@ -204,7 +208,7 @@ def create_app(test_config=None):
 
         if not body:
             abort(500)
-        
+
         else:
             previous_questions = body.get('previous_questions', None)
             quiz_category = body.get('quiz_category', None)
@@ -214,13 +218,15 @@ def create_app(test_config=None):
                 selected_question = None
 
                 if bool(int(quiz_category)):
-                    questions = fetch_questions_filter_by_category(quiz_category)
+                    questions = fetch_questions_filter_by_category(
+                        quiz_category)
 
                 else:
                     questions = fetch_questions()
 
                 available_questions = [
-                    question for question in questions if question.get('id') not in previous_questions]
+                    question for question in questions if question.get(
+                        'id') not in previous_questions]
 
                 selected_question = random.choice(
                     available_questions) if len(available_questions) else None
@@ -231,10 +237,8 @@ def create_app(test_config=None):
                     'available_questions': available_questions
                 })
 
-    
-
-            except:
-                print(exc_info())
+            except Exception as ex:
+                print(ex)
                 abort(422)
 
     '''

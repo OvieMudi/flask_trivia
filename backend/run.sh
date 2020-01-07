@@ -1,9 +1,11 @@
+export "FLASK_APP=flaskr"
+export "FLASK_ENV=development"
+
+venv env
+source "env/bin/activate"
 
 full_path=$(realpath $0)
 parent_path=$(dirname $full_path)
-
-export FLASK_APP=flaskr
-export FLASK_ENV=development
 
 service postgresql start
 

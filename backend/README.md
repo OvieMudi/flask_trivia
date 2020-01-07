@@ -12,6 +12,16 @@ Follow instructions to install the latest version of python for your platform in
 
 We recommend working within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organaized. Instructions for setting up a virual enviornment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 
+## Environment and Database Initial Setup
+
+With Postgres running, restore a database using the trivia.psql file provided. From the backend folder in terminal run:
+
+```bash
+source ./run.sh
+```
+
+- **IMPORTANT:** create a `.config.env` in the `/backend` directory that contains your database path. See the `.config.env.example` file for details.
+
 #### PIP Dependencies
 
 Once you have your virtual environment setup and running, install dependencies by naviging to the `/backend` directory and running:
@@ -30,16 +40,6 @@ This will install all of the required packages we selected within the `requireme
 
 - [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#) is the extension we'll use to handle cross origin requests from our frontend server.
 
-## Database Setup
-
-With Postgres running, restore a database using the trivia.psql file provided. From the backend folder in terminal run:
-
-```bash
-sh ./run.sh
-```
-
-- **IMPORTANT:** create a `.config.env` in the `/backend` directory that contains your database path. See the `.config.env.example` file for details.
-
 ## Running the server
 
 From within the `backend` directory first ensure you are working using your created virtual environment.
@@ -51,6 +51,8 @@ export FLASK_APP=flaskr
 export FLASK_ENV=development
 flask run
 ```
+
+The commands above is contained within the `/backend/run.sh` script file.
 
 Setting the `FLASK_ENV` variable to `development` will detect file changes and restart the server automatically.
 

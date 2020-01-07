@@ -61,7 +61,8 @@ class TriviaTestCase(unittest.TestCase):
 
     """
     TODO
-    Write at least one test for each test for successful operation and for expected errors.
+    Write at least one test for each test for successful operation
+     and for expected errors.
     """
 
     def test_get_all_categories(self):
@@ -111,7 +112,8 @@ class TriviaTestCase(unittest.TestCase):
 
     def test_play_quiz(self):
         with self.app.app_context():
-            response = self.client().post('/quizzes', json=self.play_quiz_payload)
+            response = self.client().post(
+                '/quizzes', json=self.play_quiz_payload)
             body = json.loads(response.data)
 
             self.assertTrue(body.get('success'))
